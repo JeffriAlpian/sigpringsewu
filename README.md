@@ -1,58 +1,174 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🌿 Pringsewu.com
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Portal informasi wisata dan UMKM Kabupaten Pringsewu berbasis web, dibangun dengan Laravel 13 dan Tailwind CSS. Dilengkapi peta interaktif, chatbot AI asisten (*Si Pringgo*), manajemen konten berita, serta autentikasi Google OAuth.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## ✨ Fitur Utama
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+| Fitur | Keterangan |
+|---|---|
+| 🗺️ Peta Interaktif | Visualisasi lokasi destinasi wisata & UMKM di peta |
+| 🏖️ Daftar Destinasi | Listing destinasi dengan kategori, harga, rating & jam buka |
+| 📰 Berita | Artikel berita seputar Pringsewu dengan slug URL |
+| 🤖 Chatbot *Si Pringgo* | Asisten virtual berbasis Gemini AI atau knowledge-engine lokal |
+| 🔐 Autentikasi | Login/register manual + Google OAuth via Socialite |
+| 🛠️ Admin Panel | CRUD destinasi, berita, dan pengguna untuk role `admin` |
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## 🛠️ Teknologi
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- **Backend:** Laravel 13 (PHP 8.3)
+- **Frontend:** Blade + Tailwind CSS v4 + Vite
+- **Database:** SQLite (default) atau MySQL
+- **Autentikasi:** Laravel Breeze + Socialite (Google)
+- **AI Chatbot:** Gemini API (opsional) + knowledge-engine lokal
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+## ⚡ Instalasi Cepat
 
-## Agentic Development
+### Prasyarat
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+- PHP >= 8.3
+- Composer
+- Node.js & npm
+
+### Setup
 
 ```bash
-composer require laravel/boost --dev
+# 1. Clone repositori
+git clone <repo-url> pringsewubisa
+cd pringsewubisa
 
-php artisan boost:install
+# 2. Salin konfigurasi lingkungan
+cp .env.example .env
+
+# 3. Install semua dependensi & build (satu perintah)
+composer run setup
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+> Perintah `composer run setup` akan: install dependensi Composer, generate `APP_KEY`, jalankan migrasi, install npm, dan build asset.
 
-## Contributing
+### Jalankan Server
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```bash
+composer run dev
+```
 
-## Code of Conduct
+Akses aplikasi di **http://localhost:8000**
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+---
 
-## Security Vulnerabilities
+## ⚙️ Konfigurasi Environment
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Salin `.env.example` ke `.env` dan sesuaikan nilai berikut:
 
-## License
+```dotenv
+APP_NAME=Pringsewu.com
+APP_URL=http://localhost:8000
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+# Database (default SQLite)
+DB_CONNECTION=sqlite
+
+# Chatbot AI (opsional — tanpa ini, gunakan knowledge-engine lokal)
+GEMINI_API_KEY=your_gemini_api_key
+
+# Google OAuth (opsional)
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
+GOOGLE_REDIRECT_URI=http://localhost:8000/auth/google/callback
+```
+
+---
+
+## 🗄️ Database & Seeding
+
+```bash
+# Jalankan migrasi
+php artisan migrate
+
+# Isi data awal (destinasi + user default)
+php artisan db:seed
+```
+
+### Akun Default
+
+| Role | Email | Password |
+|---|---|---|
+| Admin | `admin@pringsewu.com` | `admin123` |
+| User | `user@pringsewu.com` | `user123` |
+
+---
+
+## 🧭 Struktur Halaman
+
+| URL | Halaman |
+|---|---|
+| `/` | Beranda |
+| `/peta` | Peta interaktif destinasi |
+| `/daftar-produk` | Daftar destinasi & UMKM |
+| `/detail/{id}` | Detail destinasi |
+| `/berita` | Daftar berita |
+| `/berita/{slug}` | Detail artikel berita |
+| `/login` | Login / Register |
+| `/dashboard` | Dashboard pengguna *(auth)* |
+| `/admin/dashboard` | Dashboard admin *(admin only)* |
+| `/admin/destinations` | Kelola destinasi *(admin only)* |
+| `/admin/berita` | Kelola berita *(admin only)* |
+| `/admin/users` | Kelola pengguna *(admin only)* |
+
+---
+
+## 🤖 Chatbot *Si Pringgo*
+
+Chatbot tersedia di seluruh halaman publik. Ada dua mode:
+
+1. **Mode AI (Gemini)** — Aktif bila `GEMINI_API_KEY` dikonfigurasi di `.env`. Jawaban lebih dinamis dan kontekstual.
+2. **Mode Knowledge-Engine Lokal** — Aktif otomatis tanpa API key. Menjawab pertanyaan seputar destinasi, UMKM, cuaca, dan info Pringsewu berdasarkan data database.
+
+---
+
+## 🧪 Testing
+
+```bash
+# Jalankan seluruh test suite
+php artisan test --compact
+
+# Atau langsung via Pest
+vendor/bin/pest
+```
+
+---
+
+## 📁 Struktur Direktori Penting
+
+```
+app/
+├── Http/Controllers/
+│   ├── Admin/          # Controller admin (Destinations, Berita, Users)
+│   ├── Auth/           # AuthController, SocialiteController
+│   ├── BeritaController.php
+│   └── ChatbotController.php
+├── Models/
+│   ├── Destination.php
+│   ├── Berita.php
+│   └── User.php
+database/
+├── migrations/         # Skema tabel
+├── seeders/            # Data awal destinasi & user
+└── data/
+    └── destinations.json  # Dataset destinasi Pringsewu
+resources/views/
+├── layouts/            # Layout utama (app, admin)
+├── pages/              # Halaman publik
+├── admin/              # Panel admin
+└── components/         # Komponen (chatbot, destination-card)
+```
+
+---
+
+## 📄 Lisensi
+
+Proyek ini bersifat open-source di bawah lisensi [MIT](https://opensource.org/licenses/MIT).
